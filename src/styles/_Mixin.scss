@@ -1,0 +1,42 @@
+@mixin button-size(
+    $padding-x,
+    $padding-y,
+    $font-size,
+    $border-raduis
+) {
+    padding: $padding-y $padding-x;
+    font-size: $font-size;
+    border-radius: $border-raduis;
+}
+
+@mixin button-style(
+    $background,
+    $border-color,
+    $color,
+    $hover-background: lighten( $background, 10% ),
+    $hover-border-color: lighten( $border-color, 10% ),
+    $hover-color: $color,
+) {
+    color: $color;
+    background: $background;
+    border-color: $border-color;
+
+    &:hover {
+        color: $hover-color;
+        background: $hover-background;
+        border-color: $hover-border-color;
+    }
+
+    // focus状态，focus类
+    &:focus, &.focus {
+        color: $hover-color;
+        background: $hover-background;
+        border-color: $hover-border-color;
+    }
+
+    &:disabled, &.disabled {
+        color: $color;
+        background: $background;
+        border-color: $border-color;
+    }
+}
