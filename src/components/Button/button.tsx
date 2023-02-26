@@ -31,38 +31,33 @@ const Button: React.FC<ButtonProps> = (Props) => {
         className,
         size,
         btnType,
-        href,
+        href = '',
         children,
         ...restProps
     } = Props
 
     const classes = classNames('btn', className, {
-        // 'disabled'        : ( btnType === ButtonType.Link ) && disabled,
         'disabled'        : disabled,
         [`btn-${btnType}`]: btnType,
         [`btn-${size}`]   : size,
     })
 
-    if ( btnType === ButtonType.Link && href ) {
-        return (
-            <a
-                className={classes}
-                href={href}
-                {...restProps}
-            >
-                {children}
-            </a>
-        )
+    const ButtonBtn = (
+        <button className={classes} disabled={disabled} {...restProps}>{children}</button>
+    )
+    
+    const LinkBtn = (
+        <a className={classes} href={href} {...restProps}>{children}</a>
+    )
+
+    const DisabledLinkBtn = (
+        <span className={classes} {...restProps}>{children}</span>
+    )
+
+    if ( btnType === ButtonType.Link ) {
+        return disabled ? DisabledLinkBtn : LinkBtn
     } else {
-        return (
-            <button
-                className={classes}
-                disabled={disabled}
-                {...restProps}
-            >
-                {children}
-            </button>
-        )
+        return ButtonBtn
     }
 }
 

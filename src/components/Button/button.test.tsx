@@ -58,19 +58,30 @@ describe('test Button component', () => {
         // className include target classes
         expect(elem).toHaveClass( ...[ 'btn-link' ] )
     })
+
     it('should render disabled button when disabled set to true', () => {
-        const wrapper = render(<Button { ...DisabledProps }>Disabled</Button>)
-        const elem = wrapper.getByText('Disabled') as HTMLButtonElement
+        const wrapper = render(
+            <>
+                <Button { ...DisabledProps }>Disabled Button</Button>
+                <Button btnType={ButtonType.Link} { ...DisabledProps }>Disabled Link</Button>
+            </>
+        )
+        const elem = wrapper.getByText('Disabled Button') as HTMLButtonElement
+        const LinkElem = wrapper.getByText('Disabled Link') as HTMLSpanElement
         // elem True
         expect(elem).toBeInTheDocument()
+        expect(LinkElem).toBeInTheDocument()
         // tagName === 'BUTTON'
         expect(elem.tagName).toEqual('BUTTON')
+        expect(LinkElem.tagName).toEqual('SPAN')
         // NOT disabled
         expect(elem.disabled).toBeTruthy()
         // className include target classes
         expect(elem).toHaveClass( ...[ 'disabled' ] )
+        expect(LinkElem).toHaveClass( ...[ 'disabled' ] )
         // onClick NOT have been called
         fireEvent.click(elem)
+        fireEvent.click(LinkElem)
         expect(defaultProps.onClick).not.toBeCalled()
     })
 })
