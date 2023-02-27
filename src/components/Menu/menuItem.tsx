@@ -1,14 +1,14 @@
-import React from "react"
+import React, { useContext } from "react"
 import classNames from "classnames"
+import { MenuContext } from "./menu"
 
 export interface MenuItemProps {
-    index    ?: number
+    index     : number
     disabled ?: boolean
     className?: string
     style    ?: React.CSSProperties
     children  : React.ReactNode
 }
-
 const MenuItem: React.FC<MenuItemProps> = (Props) => {
     const {
         index,
@@ -18,12 +18,19 @@ const MenuItem: React.FC<MenuItemProps> = (Props) => {
         children
     } = Props
 
+    const context = useContext(MenuContext)
+
     const classes = classNames('XD-menu-item', className, {
-        'is-disabled': disabled
+        'is-disabled': disabled,
+        'is-active': context.index === index
     })
 
+    const handleClick = () => {
+        context.onSelect && !disabled && context.onSelect(index)
+    }
+
     return (
-        <li className={classes} style={style}>
+        <li className={classes} style={style} onClick={handleClick}>
             {children}
         </li>
     )
