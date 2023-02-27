@@ -1,0 +1,11 @@
+.button-demo-wrapper{
+    margin: 24px;
+
+    .button-demo-title{
+        margin-bottom: 12px;
+    }
+
+    > *{
+        margin: 0 12px 12px 0;
+    }
+}
