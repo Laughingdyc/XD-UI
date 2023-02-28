@@ -11,11 +11,11 @@ const MenuExample: React.FC = () => {
                 4.触发 Menu handleClick
                 5.触发 Menu onSelect
             */}
-            <Menu defaultIndex={0} onSelect={(index) => {console.log(index)}}>
+            <Menu mode={'vertical'} defaultIndex={0} onSelect={(index) => {console.log(index)}}>
                 <MenuItem index={0}>
                     item-1
                 </MenuItem>
-                <MenuItem index={1}>
+                <MenuItem index={1} disabled>
                     item-2
                 </MenuItem>
                 <MenuItem index={2}>
