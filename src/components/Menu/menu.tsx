@@ -1,5 +1,6 @@
 import React, { useState, createContext } from "react"
 import classNames from "classnames"
+import { MenuItemProps } from "./menuItem"
 
 type MenuMode = 'horizontal' | 'vertical'
 type onSelectCallback = (selectedIndex: number) => void
@@ -49,10 +50,28 @@ const Menu: React.FC<MenuProps & IChildren> = (Props) => {
         onSelect: handleClick
     }
 
+    const renderChildren = () => {
+        // 不直接用 children.map
+        // 是因为 children 可以为 React.ReactNode 中的任意类型
+        //
+        // 用 React.Children.map 代替
+        return React.Children.map( children, ( child, index ) => {
+                // child 可以为任意类型，所以要类型断言一下
+                const childElement = child as React.FunctionComponentElement<MenuItemProps>
+                const { displayName } = childElement.type
+                if ( displayName === 'MenuItem' ) {
+                    return child
+                } else {
+                    console.error("Warning: Menu has a child which is not a MenuItem component", displayName)
+                }
+            }
+        )
+    }
+
     return (
         <ul className={classes} style={style} data-testid="XD-menu">
             <MenuContext.Provider value={passedContext}>
-                {children}
+                {renderChildren()}
             </MenuContext.Provider>
         </ul>
     )
