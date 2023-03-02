@@ -1,5 +1,6 @@
 import Menu from "../../components/Menu/menu"
 import MenuItem from "../../components/Menu/menuItem"
+import SubMenu from "../../components/Menu/subMenu"
 
 const MenuExample: React.FC = () => {
     return (
@@ -11,16 +12,14 @@ const MenuExample: React.FC = () => {
                 4.触发 Menu handleClick
                 5.触发 Menu onSelect
             */}
-            <Menu mode={'vertical'} defaultIndex={0} onSelect={(index) => {console.log(index)}}>
-                <MenuItem index={0}>
-                    item-1
-                </MenuItem>
-                <MenuItem index={1} disabled>
-                    item-2
-                </MenuItem>
-                <MenuItem index={2}>
-                    item-3
-                </MenuItem>
+            <Menu defaultIndex={0} onSelect={(index) => {console.log(index)}}>
+                <MenuItem>item-1</MenuItem>
+                <MenuItem disabled>item-2</MenuItem>
+                <SubMenu title="dropdown">
+                    <MenuItem>dropdown-1</MenuItem>
+                    <MenuItem>dropdown-2</MenuItem>
+                </SubMenu>
+                <MenuItem>item-3</MenuItem>
             </Menu>
         </>
     )

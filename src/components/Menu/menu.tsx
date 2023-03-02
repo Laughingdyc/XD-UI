@@ -37,7 +37,8 @@ const Menu: React.FC<MenuProps & IChildren> = (Props) => {
     const [ currentActive, setCurrentActive ] = useState(defaultIndex)
 
     const classes = classNames('XD-menu', className, {
-        'menu-vertical': mode === 'vertical'
+        'menu-vertical': mode === 'vertical',
+        'menu-horizontal': mode !== 'vertical'
     })
 
     const handleClick = (index: number) => {
@@ -59,7 +60,7 @@ const Menu: React.FC<MenuProps & IChildren> = (Props) => {
                 // child 可以为任意类型，所以要类型断言一下
                 const childElement = child as React.FunctionComponentElement<MenuItemProps>
                 const { displayName } = childElement.type
-                if ( displayName === 'MenuItem' ) {
+                if ( displayName === 'MenuItem' || childElement.type.displayName === 'SubMenu' ) {
                     // 把属性混入到示例 child 中
                     return React.cloneElement( childElement, { index } )
                 } else {
