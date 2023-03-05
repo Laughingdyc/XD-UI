@@ -4,9 +4,10 @@ import { MenuContext } from "./menu"
 import { MenuItemProps } from "./menuItem"
 
 export interface SubMenuProps {
-    index    ?: number
+    index    ?: string
     title     : string
     className?: string
+    disabled ?: boolean
     children  : React.ReactNode
 }
 
@@ -15,6 +16,7 @@ const SubMenu: React.FC<SubMenuProps> = (Props) => {
         index,
         title,
         className,
+        disabled,
         children
     } = Props
 
@@ -45,7 +47,12 @@ const SubMenu: React.FC<SubMenuProps> = (Props) => {
         onMouseLeave: (e: React.MouseEvent) => { handleMouse( e, false ) }
     } : {}
 
+    const subMenuHandleClick = () => {
+        context.onSelect && !disabled && typeof index === 'string' && context.onSelect(index)
+    }
+
     const classes = classNames('XD-menu-item submenu-item', className, {
+        'is-disabled': disabled,
         'is-active': context.index === index
     })
 
@@ -53,10 +60,10 @@ const SubMenu: React.FC<SubMenuProps> = (Props) => {
         const subClasses = classNames('XD-submenu', {
             'menu-opened': menuOpen
         })
-        const childrenComponent = React.Children.map( children, ( child, i ) => {
+        const childrenComponent = React.Children.map( children, ( child, subIndex ) => {
             const childElement = child as FunctionComponentElement<MenuItemProps>
             if ( childElement.type.displayName === 'MenuItem' ) {
-                return childElement
+                return React.cloneElement( childElement, { index: `${index}-${subIndex}` } )
             } else {
                 console.error("Warning: SubMenu has a child which is not a MenuItem component")
             }
@@ -67,7 +74,7 @@ const SubMenu: React.FC<SubMenuProps> = (Props) => {
     }
 
     return (
-        <li key={index} className={classes} { ...hoverEvent } >
+        <li key={index} className={classes} onClick={subMenuHandleClick} { ...hoverEvent } >
             <div className="submenu-title" { ...clickEvent }>
                 {title}
             </div>
