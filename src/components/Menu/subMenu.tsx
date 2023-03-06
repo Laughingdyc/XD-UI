@@ -20,8 +20,13 @@ const SubMenu: React.FC<SubMenuProps> = (Props) => {
         children
     } = Props
 
+    // 是否自动展开垂直的submenu
+    const context = useContext(MenuContext)
+    const openedSubMenus = context.defaultOpenSubMenus as Array<string>
+    const isOpened = (index && context.mode === 'vertical') ? openedSubMenus.includes(index) : false
+
     // 控制下拉框的显示
-    const [ menuOpen, setMenuOpen ] = useState(false)
+    const [ menuOpen, setMenuOpen ] = useState(isOpened)
 
     const handleClick = (e: React.MouseEvent) => {
         e.preventDefault()
@@ -38,7 +43,6 @@ const SubMenu: React.FC<SubMenuProps> = (Props) => {
         }, 300)
     }
 
-    const context = useContext(MenuContext)
     
     const clickEvent = context.mode === 'vertical' ? { onClick: handleClick } : {}
 
