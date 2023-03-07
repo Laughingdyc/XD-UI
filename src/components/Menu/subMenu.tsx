@@ -57,7 +57,7 @@ const SubMenu: React.FC<SubMenuProps> = (Props) => {
 
     const classes = classNames('XD-menu-item submenu-item', className, {
         'is-disabled': disabled,
-        'is-active': context.index === index
+        'is-active': context.index === index || context.index.split('-')[0] === index
     })
 
     const renderChildren = () => {

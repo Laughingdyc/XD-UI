@@ -25,7 +25,8 @@ const MenuItem: React.FC<MenuItemProps> = (Props) => {
         'is-active': context.index === index
     })
 
-    const handleClick = () => {
+    const handleClick = (e: React.MouseEvent) => {
+        e.stopPropagation()
         context.onSelect && !disabled && typeof index === 'string' && context.onSelect(index)
     }
 
