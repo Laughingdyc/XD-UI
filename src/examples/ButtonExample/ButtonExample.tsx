@@ -1,7 +1,7 @@
 import Button, { ButtonSize, ButtonType } from "../../components/Button/button"
 import './ButtonExample.scss'
 
-const ButtonExample: React.FC<any> = (Prop) => {
+const ButtonExample: React.FC<any> = (Props) => {
     return (
         <>
             <div className='button-demo-wrapper'>
